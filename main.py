@@ -56,20 +56,29 @@ class Dealing(Players):
             temp = []
             for card in range(1, self.hand+1):
                 temp.append(deck_of_cards.pop())
-            
+                
+            print(f'{player}.hráč: ' + ', '.join(map(str, temp))) 
             hands_holder['player_' + str(player)] = temp
+            # print(', '.join(hands_holder['player_' + str(player)]))
     
     def dealers_hand(self):
         temp = []
         for card in range(1, self.hand+1):
             temp.append(deck_of_cards.pop())
         
+        print(f'dealer: {temp[0]}, ?')
         hands_holder['dealer'] = temp
+    
                 
 dealing = Dealing(bets.n_of_players, 2)
+print('DEALOVANIE')
+print('-------')
 dealing.shuffle_cards()
 dealing.players_hand()
 dealing.dealers_hand()
+print('-------')
+
+
 
 
 
