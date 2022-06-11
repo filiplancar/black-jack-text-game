@@ -34,11 +34,11 @@ class Bets(Players):
                         continue
 
 bets = Bets(4, randint(1, 4), 1000, 10000)
-# print('STÁVKY')
-# print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
-# print('-------')
-# bets.betting()
-# print('-------')
+print('STÁVKY')
+print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
+print('-------')
+bets.betting()
+print('-------')
 
 deck_of_cards = 4*[1,2,3,4,5,6,7,8,9,10,10,10,10]
 hands_holder = {}
@@ -77,6 +77,10 @@ dealing.shuffle_cards()
 dealing.players_hand()
 dealing.dealers_hand()
 print('-------')
+
+class Game(Players):
+    def __init__(self, n_of_players, user_order):
+        super().__init__(n_of_players, user_order)
 
 
 
