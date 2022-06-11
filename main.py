@@ -7,6 +7,7 @@ class Players(ABC):
         self.n_of_players = n_of_players
         self.user_order = user_order
 
+bets_holder = {}
 class Bets(Players):
     def __init__(self, n_of_players, user_order, min_bet, max_bet):
         super().__init__(n_of_players, user_order)  
@@ -15,7 +16,6 @@ class Bets(Players):
         
     
     def betting(self):
-        bets_holder = {}
         for player in range(1,self.n_of_players+1):
             if player != self.user_order:    
                 print(f'{player}. hráč')
@@ -25,7 +25,7 @@ class Bets(Players):
             else:
                 while 1:
                     try:
-                        print(f'{player}. hráč')
+                        print(f'{player}. hráč(TY)')
                         bets_holder['player_' + str(player)] = int(input('stávka(€): '))
                         
                         if bets_holder['player_' + str(player)] <= self.max_bet and bets_holder['player_' + str(player)] >= self.min_bet:
