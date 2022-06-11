@@ -47,6 +47,14 @@ class Dealing:
     def __init__(self, n_of_players, hand, user_order='None'):
         super().__init__(n_of_players, user_order)    
         self.hand = hand
+    
+    # def players_hand(self):
+    #     for player in range(1,self.n_of_players+1):
+    #         for card in range(1, self.hand):
+    #             print('Good')
+
+dealing = Dealing(bets.n_of_players, 2)
+
             
 
 
