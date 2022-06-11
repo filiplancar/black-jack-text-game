@@ -59,7 +59,6 @@ class Dealing(Players):
                 
             print(f'{player}.hráč: ' + ', '.join(map(str, temp))) 
             hands_holder['player_' + str(player)] = temp
-            # print(', '.join(hands_holder['player_' + str(player)]))
     
     def dealers_hand(self):
         temp = []
@@ -79,10 +78,16 @@ dealing.dealers_hand()
 print('-------')
 
 class Game(Players):
-    def __init__(self, n_of_players, user_order):
+    def __init__(self, n_of_players, user_order, max_value, d_min_value):
         super().__init__(n_of_players, user_order)
+        self.max_value = max_value
+        self.d_min_value = d_min_value
 
-game = Game(bets.n_of_players, bets.user_order)
+
+    def playing(self):
+        pass
+
+game = Game(bets.n_of_players, bets.user_order, 21, 17)
 
 
 
