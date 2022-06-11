@@ -43,6 +43,11 @@ print('-------')
 
 deck_of_cards = 4*[1,2,3,4,5,6,7,8,9,10,10,10]
 
+class Dealing:
+    def __init__(self, n_of_players, hand, user_order='None'):
+        super().__init__(n_of_players, user_order)    
+        self.hand = hand
+            
 
 
 
