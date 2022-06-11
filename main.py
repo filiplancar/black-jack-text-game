@@ -82,6 +82,8 @@ class Game(Players):
     def __init__(self, n_of_players, user_order):
         super().__init__(n_of_players, user_order)
 
+game = Game(bets.n_of_players, bets.user_order)
+
 
 
 
