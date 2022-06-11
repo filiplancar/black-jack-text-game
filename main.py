@@ -14,7 +14,6 @@ class Bets(Players):
         self.min_bet = min_bet
         self.max_bet = max_bet
         
-    
     def betting(self):
         for player in range(1,self.n_of_players+1):
             if player != self.user_order:    
@@ -41,6 +40,9 @@ print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
 print('-------')
 bets.betting()
 print('-------')
+
+deck_of_cards = 4*[1,2,3,4,5,6,7,8,9,10,10,10]
+
 
 
 
