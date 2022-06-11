@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from random import randint
+from random import randint, shuffle
+
 
 class Players(ABC):
     @abstractmethod
@@ -35,27 +36,36 @@ class Bets(Players):
                         continue
 
 bets = Bets(4, randint(1, 4), 1000, 10000)
-print('STÁVKY')
-print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
-print('-------')
-bets.betting()
-print('-------')
+# print('STÁVKY')
+# print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
+# print('-------')
+# bets.betting()
+# print('-------')
 
-deck_of_cards = 4*[1,2,3,4,5,6,7,8,9,10,10,10]
-
-class Dealing:
+deck_of_cards = 4*[1,2,3,4,5,6,7,8,9,10,10,10,10]
+hands_holder = {}
+class Dealing(Players):
     def __init__(self, n_of_players, hand, user_order='None'):
         super().__init__(n_of_players, user_order)    
         self.hand = hand
     
-    # def players_hand(self):
-    #     for player in range(1,self.n_of_players+1):
-    #         for card in range(1, self.hand):
-    #             print('Good')
+    @staticmethod
+    def shuffle_cards():
+        shuffle(deck_of_cards)
 
-dealing = Dealing(bets.n_of_players, 2)
-
+    def players_hand(self):
+        for player in range(1,self.n_of_players+1):
+            temp = []
+            for card in range(1, self.hand+1):
+                temp.append(deck_of_cards.pop())
             
+            hands_holder['player_' + str(player)] = temp
+                
+dealing = Dealing(bets.n_of_players, 2)
+dealing.shuffle_cards()
+dealing.players_hand()
+
+
 
 
 
