@@ -15,23 +15,32 @@ class Bets(Players):
         
     
     def betting(self):
-        print('STÁVKY')
-        print('-------')
         bets_holder = {}
         for player in range(1,self.n_of_players+1):
-            print(f'{player}. hráč')
-            bets_holder['player_' + str(player)] = randint(self.min_bet, self.max_bet)
-            print('stávka:', bets_holder['player_' + str(player)], '€')
-        
-            # print(f'{player}. hráč')
-            # bets_holder['player_' + str(player)] = input(int('Zadaj stávku'))
-        
-        print('-------')
+            if player != self.user_order:    
+                print(f'{player}. hráč')
+                bets_holder['player_' + str(player)] = randint(self.min_bet, self.max_bet)
+                print('stávka(€):', bets_holder['player_' + str(player)])
 
-        # print(var_holder)
+            else:
+                while 1:
+                    try:
+                        print(f'{player}. hráč')
+                        bets_holder['player_' + str(player)] = int(input('stávka(€): '))
+                        
+                        if bets_holder['player_' + str(player)] <= self.max_bet and bets_holder['player_' + str(player)] >= self.min_bet:
+                            break
+
+                    except ValueError as e:
+                        print('Zle zvolená stávka')
+                        continue
 
 bets = Bets(4, randint(1, 4), 1000, 10000)
+print('STÁVKY')
+print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
+print('-------')
 bets.betting()
+print('-------')
 
 
 
