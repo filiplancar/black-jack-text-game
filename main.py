@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 from random import randint, shuffle
-
-
 class Players(ABC):
     @abstractmethod
     def __init__(self, n_of_players, user_order):
@@ -60,10 +58,19 @@ class Dealing(Players):
                 temp.append(deck_of_cards.pop())
             
             hands_holder['player_' + str(player)] = temp
+    
+    def dealers_hand(self):
+        temp = []
+        for card in range(1, self.hand+1):
+            temp.append(deck_of_cards.pop())
+        
+        hands_holder['dealer'] = temp
                 
 dealing = Dealing(bets.n_of_players, 2)
 dealing.shuffle_cards()
 dealing.players_hand()
+dealing.dealers_hand()
+
 
 
 
