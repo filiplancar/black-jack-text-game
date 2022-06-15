@@ -1,5 +1,9 @@
 from abc import ABC, abstractmethod
 from random import randint, shuffle
+
+print('-------')
+print('BLACK JACK')
+print('-------')
 class Players(ABC):
     @abstractmethod
     def __init__(self, n_of_players, user_order):
@@ -58,7 +62,7 @@ class Dealing(Players):
                 temp.append(deck_of_cards.pop())
                 
             print(f'{player}.hráč: ' + ', '.join(map(str, temp))) 
-            hands_holder['player_' + str(player)] = temp
+            hands_holder[str(player)] = temp
     
     def dealers_hand(self):
         temp = []
@@ -83,12 +87,28 @@ class Game(Players):
         self.max_value = max_value
         self.d_min_value = d_min_value
 
-
     def playing(self):
-        pass
+        for player in range(1,self.n_of_players+1):
+            player_choice = randint(0,1)
+            sum_of_hand = sum(hands_holder[str(player)])
+            # print(sum_of_hand)
+            # while player_choice != 0:
+            # print(f'{player}. hráč: {player_choice}')
+                # break
+            temp = []
+            while sum_of_hand < self.max_value and player_choice != 0:
+                temp.append(deck_of_cards.pop())
+                sum_of_hand += temp[0]
+            
+            hands_holder[str(player)] += temp
+            print(hands_holder)
+            
 
 game = Game(bets.n_of_players, bets.user_order, 21, 17)
-
+print('ŤAHANIE KARIET')
+print('-------')
+game.playing()
+print('-------')
 
 
 
