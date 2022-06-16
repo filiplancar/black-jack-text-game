@@ -38,11 +38,11 @@ class Bets(Players):
                         continue
 
 bets = Bets(4, randint(1, 4), 1000, 10000)
-print('STÁVKY')
-print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
-print('-------')
-bets.betting()
-print('-------')
+# print('STÁVKY')
+# print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
+# print('-------')
+# bets.betting()
+# print('-------')
 
 deck_of_cards = 4*[1,2,3,4,5,6,7,8,9,10,10,10,10]
 hands_holder = {}
@@ -91,17 +91,29 @@ class Game(Players):
         for player in range(1,self.n_of_players+1):
             player_choice = randint(0,1)
             sum_of_hand = sum(hands_holder[str(player)])
-            # print(sum_of_hand)
-            # while player_choice != 0:
-            # print(f'{player}. hráč: {player_choice}')
-                # break
-            temp = []
-            while sum_of_hand < self.max_value and player_choice != 0:
-                temp.append(deck_of_cards.pop())
-                sum_of_hand += temp[0]
             
-            hands_holder[str(player)] += temp
-            print(hands_holder)
+            while player_choice != 0 and sum_of_hand < self.max_value:
+                hands_holder[f'{player}'].append(deck_of_cards.pop())
+                sum_of_hand = sum(hands_holder[str(player)])
+                player_choice = randint(0,1)
+            
+                # if player == self.user_order:
+                #     print('Good')
+            
+            
+
+        # print(hands_holder)                
+            
+            #     break
+            # temp = []
+
+            # while sum_of_hand < self.max_value and player_choice != 0:
+            #     temp.append(deck_of_cards.pop())
+            #     sum_of_hand = sum(hands_holder[str(player)])
+            
+            # hands_holder[str(player)] += temp
+            
+            # print(f'{player}: {sum_of_hand}, {player_choice}')
             
 
 game = Game(bets.n_of_players, bets.user_order, 21, 17)
