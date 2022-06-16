@@ -38,11 +38,11 @@ class Bets(Players):
                         continue
 
 bets = Bets(4, randint(1, 4), 1000, 10000)
-# print('STÁVKY')
-# print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
-# print('-------')
-# bets.betting()
-# print('-------')
+print('STÁVKY')
+print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
+print('-------')
+bets.betting()
+print('-------')
 
 deck_of_cards = 4*[1,2,3,4,5,6,7,8,9,10,10,10,10]
 hands_holder = {}
@@ -99,21 +99,10 @@ class Game(Players):
             
                 # if player == self.user_order:
                 #     print('Good')
+                #     continue
             
-            
-
-        # print(hands_holder)                
-            
-            #     break
-            # temp = []
-
-            # while sum_of_hand < self.max_value and player_choice != 0:
-            #     temp.append(deck_of_cards.pop())
-            #     sum_of_hand = sum(hands_holder[str(player)])
-            
-            # hands_holder[str(player)] += temp
-            
-            # print(f'{player}: {sum_of_hand}, {player_choice}')
+        for key in hands_holder:
+            print(key, ' : ', hands_holder[key])
             
 
 game = Game(bets.n_of_players, bets.user_order, 21, 17)
