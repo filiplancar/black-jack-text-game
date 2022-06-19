@@ -95,7 +95,7 @@ class Game(Players):
             
             while player_choice != 0 and sum_of_hand < self.max_value:
                 hands_holder[f'{player}'].append(deck_of_cards.pop())
-                # sum_of_hand = sum(hands_holder[str(player)])
+                sum_of_hand = sum(hands_holder[str(player)])
                 player_choice = randint(0,1)
 
                 if sum_of_hand > self.max_value and 11 in hands_holder[f'{player}']:
