@@ -46,6 +46,7 @@ print('-------')
 
 deck_of_cards = 4*[2,3,4,5,6,7,8,9,10,10,10,10,11]
 hands_holder = {}
+
 class Dealing(Players):
     def __init__(self, n_of_players, hand, user_order='None'):
         super().__init__(n_of_players, user_order)    
@@ -72,7 +73,6 @@ class Dealing(Players):
         print(f'dealer: {temp[0]}, ?')
         hands_holder['dealer'] = temp
     
-                
 dealing = Dealing(bets.n_of_players, 2)
 print('DEALOVANIE')
 print('-------')
@@ -88,35 +88,36 @@ class Game(Players):
         self.d_min_value = d_min_value
 
     def playing(self):
-        for player in range(1,self.n_of_players+1):
-            sum_of_hand = sum(hands_holder[str(player)]) 
-            
-            while True:
-                if sum_of_hand > self.max_value and 11 in hands_holder[f'{player}']:
-                    for i, n in enumerate(hands_holder[f'{player}']):
-                        if n == 11:
-                            hands_holder[f'{player}'][i] = 1
-                            sum_of_hand = sum(hands_holder[str(player)])    
-                
-                if (sum_of_hand > 21 and 11 not in hands_holder[f'{player}']) or (sum_of_hand==21):
-                    return False
+        self.sum_of_hand = sum(hands_holder[str(player)]) 
+        player_choice = 1
 
-                hands_holder[f'{player}'].append(deck_of_cards.pop())
-                sum_of_hand = sum(hands_holder[str(player)])
+        while True:
+            for i, n in enumerate(hands_holder[f'{player}']):
+                if self.sum_of_hand > self.max_value and n == 11:
+                    hands_holder[f'{player}'][i] = 1
+                    self.sum_of_hand = sum(hands_holder[str(player)])    
+
+            player_choice = randint(0,1)        
+            if (self.sum_of_hand>=21) or (player_choice == 0):
+                return False
+            
+            hands_holder[f'{player}'].append(deck_of_cards.pop())
+            self.sum_of_hand = sum(hands_holder[str(player)])
+            
     
     def print_hands(self):
-        for player in range(1,self.n_of_players+1):
-            print(f'{player}.hráč:', end=' ')
-            sum_of_hand = sum(hands_holder[str(player)]) 
-            print(sum_of_hand)
-            print(', '.join(map(str,hands_holder[str(player)])))
+        print(f'{player}.hráč:', end=' ')
+        print(', '.join(map(str,hands_holder[str(player)])))
             
 game = Game(bets.n_of_players, bets.user_order, 21, 17)
 print('ŤAHANIE KARIET')
 print('-------')
-game.playing()
-game.print_hands()
+for player in range(1,game.n_of_players+1):
+    game.playing()
+    game.print_hands()
+
 print('-------')
+
 
 
 
