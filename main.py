@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from random import randint, shuffle
+from tkinter import E
 
 print('-------')
 print('BLACK JACK')
@@ -88,23 +89,33 @@ class Game(Players):
         self.d_min_value = d_min_value
 
     def playing(self):
-        self.sum_of_hand = sum(hands_holder[str(player)]) 
-        player_choice = 1
-
         while True:
+            self.sum_of_hand = sum(hands_holder[str(player)])
             for i, n in enumerate(hands_holder[f'{player}']):
                 if self.sum_of_hand > self.max_value and n == 11:
                     hands_holder[f'{player}'][i] = 1
                     self.sum_of_hand = sum(hands_holder[str(player)])    
 
-            player_choice = randint(0,1)        
-            if (self.sum_of_hand>=21) or (player_choice == 0):
+            if self.sum_of_hand>=21:
+                return False
+
+            if player != self.user_order:
+                player_choice = randint(0,1)        
+            
+            else:
+                print('TVOJE KARTY:', ', '.join(map(str,hands_holder[str(player)])))
+                try:
+                    player_choice = int(input('Ďalšia karta? 0=NIE/1=ANO: '))  
+                    
+                except Exception as e:
+                    print(e)
+                    continue
+
+            if player_choice == 0:
                 return False
             
             hands_holder[f'{player}'].append(deck_of_cards.pop())
-            self.sum_of_hand = sum(hands_holder[str(player)])
             
-    
     def print_hands(self):
         print(f'{player}.hráč:', end=' ')
         print(', '.join(map(str,hands_holder[str(player)])))
