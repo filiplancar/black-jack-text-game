@@ -101,6 +101,7 @@ class Game(Players):
                 player_choice = randint(0,1)        
             
             else:
+                print()
                 print('TVOJE KARTY:', ', '.join(map(str,hands_holder[str(player)])))
                 try:
                     player_choice = int(input('Ďalšia karta? 0=NIE/1=ANO: '))  
@@ -140,7 +141,6 @@ class Game(Players):
     def print_dealer():
         print(f'dealer:', end=' ')
         print(', '.join(map(str,hands_holder['dealer'])))
-
 
 game = Game(bets.n_of_players, bets.user_order, 21)
 print('ŤAHANIE KARIET')
