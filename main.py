@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from random import randint, shuffle
-from tkinter import E
 
 print('-------')
 print('BLACK JACK')
@@ -83,10 +82,9 @@ dealing.dealers_hand()
 print('-------')
 
 class Game(Players):
-    def __init__(self, n_of_players, user_order, max_value, d_min_value):
+    def __init__(self, n_of_players, user_order, max_value):
         super().__init__(n_of_players, user_order)
         self.max_value = max_value
-        self.d_min_value = d_min_value
 
     def playing(self):
         while True:
@@ -106,7 +104,7 @@ class Game(Players):
                 print('TVOJE KARTY:', ', '.join(map(str,hands_holder[str(player)])))
                 try:
                     player_choice = int(input('Ďalšia karta? 0=NIE/1=ANO: '))  
-                    
+
                 except Exception as e:
                     print(e)
                     continue
@@ -115,18 +113,44 @@ class Game(Players):
                 return False
             
             hands_holder[f'{player}'].append(deck_of_cards.pop())
-            
-    def print_hands(self):
+
+    @staticmethod  
+    def print_hands():
         print(f'{player}.hráč:', end=' ')
         print(', '.join(map(str,hands_holder[str(player)])))
+
+    def dealer_playing(self, d_min_value):
+        self.d_min_value = d_min_value
+        self.sum_of_hand = sum(hands_holder['dealer'])
+
+        while True:
+            self.sum_of_hand = sum(hands_holder['dealer'])
+
+            for i, n in enumerate(hands_holder['dealer']):
+                if self.sum_of_hand > self.max_value and n == 11:
+                    hands_holder['dealer'][i] = 1
+                    self.sum_of_hand = sum(hands_holder['dealer'])   
             
-game = Game(bets.n_of_players, bets.user_order, 21, 17)
+            if self.sum_of_hand > self.d_min_value-1:
+                return False
+            
+            hands_holder['dealer'].append(deck_of_cards.pop())
+    
+    @staticmethod
+    def print_dealer():
+        print(f'dealer:', end=' ')
+        print(', '.join(map(str,hands_holder['dealer'])))
+
+
+game = Game(bets.n_of_players, bets.user_order, 21)
 print('ŤAHANIE KARIET')
 print('-------')
 for player in range(1,game.n_of_players+1):
     game.playing()
     game.print_hands()
 
+game.dealer_playing(17)
+game.print_dealer()
 print('-------')
 
 
