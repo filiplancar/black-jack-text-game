@@ -21,16 +21,16 @@ class Bets(Players):
         for player in range(1,self.n_of_players+1):
             if player != self.user_order:    
                 print(f'{player}. hráč')
-                bets_holder['player_' + str(player)] = randint(self.min_bet, self.max_bet)
-                print('stávka(€):', bets_holder['player_' + str(player)])
+                bets_holder[str(player)] = randint(self.min_bet, self.max_bet)
+                print('stávka(€):', bets_holder[str(player)])
 
             else:
                 while 1:
                     try:
                         print(f'{player}. hráč(TY)')
-                        bets_holder['player_' + str(player)] = int(input('stávka(€): '))
+                        bets_holder[str(player)] = int(input('stávka(€): '))
                         
-                        if bets_holder['player_' + str(player)] <= self.max_bet and bets_holder['player_' + str(player)] >= self.min_bet:
+                        if bets_holder[str(player)] <= self.max_bet and bets_holder[str(player)] >= self.min_bet:
                             break
 
                     except ValueError as e:
@@ -38,19 +38,19 @@ class Bets(Players):
                         continue
 
 bets = Bets(4, randint(1, 4), 1000, 10000)
-# print('STÁVKY')
-# print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
-# print('-------')
-# bets.betting()
-# print('-------')
+print('STÁVKY')
+print(f'min. stávka: {bets.min_bet}, ' + f'max. stávka: {bets.max_bet}')
+print('-------')
+bets.betting()
+print('-------')
 
-# deck_of_cards = 4*[2,3,4,5,6,7,8,9,10,10,10,10,11]
+deck_of_cards = 4*[2,3,4,5,6,7,8,9,10,10,10,10,11]
 hands_holder = {
     '1' : [11,9],
     '2' : [11,3],
     '3' : [11,10],
     '4' : [11,10,9],
-    'dealer' : [10,10,10]
+    'dealer' : [10,10,9]
 }
 
 class Dealing(Players):
@@ -80,12 +80,12 @@ class Dealing(Players):
         hands_holder['dealer'] = temp
     
 dealing = Dealing(bets.n_of_players, 2)
-# print('DEALOVANIE')
-# print('-------')
-# dealing.shuffle_cards()
-# dealing.players_hand()
-# dealing.dealers_hand()
-# print('-------')
+print('DEALOVANIE')
+print('-------')
+dealing.shuffle_cards()
+dealing.players_hand()
+dealing.dealers_hand()
+print('-------')
 
 class Game(Players):
     def __init__(self, n_of_players, user_order, max_value):
@@ -149,15 +149,15 @@ class Game(Players):
         print(', '.join(map(str,hands_holder['dealer'])))
 
 game = Game(bets.n_of_players, bets.user_order, 21)
-# print('ŤAHANIE KARIET')
-# print('-------')
+print('ŤAHANIE KARIET')
+print('-------')
 for player in range(1,game.n_of_players+1):
-#     game.playing()
+    game.playing()
     game.print_hands()
 
-# game.dealer_playing(17)
+game.dealer_playing(17)
 game.print_dealer()
-# print('-------')
+print('-------')
 
 class Results(Game):
     def __init__(self, n_of_players, user_order, max_value):
@@ -165,32 +165,36 @@ class Results(Game):
 
     def comparison(self):
         if sum(hands_holder['dealer']) <= self.max_value:
-            if (sum(hands_holder[str(player)]) > sum(hands_holder['dealer']) and sum(hands_holder[str(player)]) <= self.max_value):
-            #     if sum(hands_holder[str(player)]) == self.max_value:
-            #         print('pass')
-            #     else:
-                print(f'{player}. hráč vyhral')
-            
+            if sum(hands_holder[str(player)]) >= sum(hands_holder['dealer']) and sum(hands_holder[str(player)]) <= self.max_value:
+                if sum(hands_holder[str(player)]) == self.max_value and len(hands_holder[str(player)])==2 and len(hands_holder['dealer']) > 2:
+                    print(f'{player}. hráč vyhral:', 1.5*bets_holder[str(player)])
+                elif sum(hands_holder[str(player)]) > sum(hands_holder['dealer']):
+                    print(f'{player}. hráč vyhral:', bets_holder[str(player)])
+                elif sum(hands_holder[str(player)]) == sum(hands_holder['dealer']):
+                    print(f'{player}. Remíza(Peniaze nevyhráva ani jeden)')    
+        
             elif (sum(hands_holder[str(player)]) < sum(hands_holder['dealer'])) or (sum(hands_holder[str(player)]) > self.max_value):
-                print(f'{player}. Dealer vyhral')
+                print(f'{player}. Dealer vyhral:', bets_holder[str(player)])
             
-            elif sum(hands_holder[str(player)]) == sum(hands_holder['dealer']):
-                print(f'{player}. Remíza(Peniaze nevyhráva ani jeden)')
+        
 
         else:
             if sum(hands_holder[str(player)]) > self.max_value:
-                print(f'{player}. Dealer vyhral')
+                print(f'{player}. Dealer vyhral:', bets_holder[str(player)])
+            
+            elif sum(hands_holder[str(player)]) == self.max_value and len(hands_holder[str(player)])==2:
+                print(f'{player}. hráč vyhral:', 1.5*bets_holder[str(player)])
             
             else:
-                print(f'{player}. hráč vyhral')
-        
-
+                print(f'{player}. hráč vyhral:', bets_holder[str(player)])
+    
 results = Results(game.n_of_players, game.user_order, game.max_value)
 print('VÝSLEDKY')
 print('-------')
 for player in range(1,results.n_of_players+1):
     results.comparison()
 
+print(bets_holder)
 print('-------')
 
 
